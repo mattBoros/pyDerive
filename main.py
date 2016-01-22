@@ -1,11 +1,17 @@
-from Variable import Variable
+from PrimitiveTerms import Variable
 from PrimitiveTerms import simplify
 from PrimitiveTerms import *
 
+"""
 x = Variable('x')
-y = ((x**50)*x*5)*(x + 5)
-print simplify(y.derivative())
-print simplify((x+x*1*1).derivative())
+der = (x**2).derivative()
+print der
+print der.evaluate({x: 5})
+"""
+print eval("Variable('x')**2")
+
+
+
 
 
 

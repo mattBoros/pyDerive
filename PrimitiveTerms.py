@@ -67,10 +67,7 @@ def constant_arithmetic(c1, c2, operation):
 
 class Term(object):
 
-    def derivative(self):
-        pass
-
-    def integrate(self):
+    def derivative(self, respect_to=None):
         pass
 
     def __mul__(self, other):
@@ -122,6 +119,9 @@ class Term(object):
     def __ne__(self, other):
         return not self.__eq__(other)
 
+    def evaluate(self, values):
+        print "There is a subclass of Term which does not override."
+
 # -----------------------------------------------------------
 
 
@@ -132,11 +132,8 @@ class Constant(Term):
         self.number = number
 
     @staticmethod
-    def derivative():
+    def derivative(self, respect_to=None):
         return Constant(0)
-
-    def integral(self, with_respect_to):
-        pass
 
     def __str__(self):
         return str(self.number)
@@ -147,6 +144,9 @@ class Constant(Term):
         if (type(other) == int or type(other) == float) and self.number == other:
             return True
         return False
+
+    def evaluate(self, values):
+        return self.number
 
 # -----------------------------------------------------------
 
@@ -189,8 +189,8 @@ class NaturalLog(Term):
         assert issubclass(type(term), Term)
         self.term = term
 
-    def derivative(self):
-        return self.term.derivative() / self.term
+    def derivative(self, respect_to=None):
+        return self.term.derivative(respect_to) / self.term
 
     def __str__(self):
         return 'ln({0})'.format(self.term.to_string())
@@ -204,6 +204,9 @@ class NaturalLog(Term):
             return simplify(other.term) == simplify(self.term)
         return False
 
+    def evaluate(self, values):
+        return math.log(self.term.evaluate(values))
+
 
 # -----------------------------------------------------------
 
@@ -215,9 +218,9 @@ class AddedTerm(Term):
             assert issubclass(type(term), Term)
         self.terms = terms
 
-    def derivative(self):
+    def derivative(self, respect_to=None):
         # (u + v)' = u' + v'
-        return AddedTerm([term.derivative() for term in self.terms])
+        return AddedTerm([term.derivative(respect_to) for term in self.terms])
 
     def __str__(self):
         if len(self.terms) == 1:
@@ -241,37 +244,50 @@ class AddedTerm(Term):
             return True
         return False
 
+    def evaluate(self, values):
+        s = 0
+        for term in self.terms:
+            s = term.evaluate(values) + s
+        return s
+
 
 # -----------------------------------------------------------
 
 
 class MultipliedTerm(Term):
+
     def __init__(self, terms):
         for term in terms:
             assert issubclass(type(term), Term)
         self.terms = terms
 
-    def derivative(self):
+    def derivative(self, respect_to=None):
         # (uv)' = u'v + uv'
         if len(self.terms) == 1:
-            return self.terms[0].derivative()
+            return self.terms[0].derivative(respect_to)
         if len(self.terms) == 2:
             u = self.terms[0]
             v = self.terms[1]
-            return u.derivative() * v + u * v.derivative()
+            return u.derivative(respect_to) * v + u * v.derivative(respect_to)
         halfway_point = len(self.terms)/2
         u = MultipliedTerm(self.terms[:halfway_point])
         v = MultipliedTerm(self.terms[halfway_point:])
-        return u.derivative() * v + u * v.derivative()
+        return u.derivative(respect_to) * v + u * v.derivative(respect_to)
 
     def __str__(self):
         if len(self.terms) == 1:
             return str(self.terms[0])
         s = ""
         for term in self.terms[:-1]:
-            s = s + "{0}*".format(term)
+            term_string = str(term)
+            if len(term_string) > 1:
+                term_string = surround_with_parenthesis(term_string)
+            s = s + "{0}*".format(term_string)
         if len(self.terms) > 0:
-            s = s + "{0}".format(self.terms[-1])
+            last_term_string = str(self.terms[-1])
+            if len(last_term_string) > 1:
+                last_term_string = surround_with_parenthesis(last_term_string)
+            s = s + "{0}".format(last_term_string)
         return s
 
     def __eq__(self, other):
@@ -286,39 +302,91 @@ class MultipliedTerm(Term):
             return True
         return False
 
+    def evaluate(self, values):
+        p = 1
+        for term in self.terms:
+            p = term.evaluate(values) * p
+        return p
+
 
 # -----------------------------------------------------------
 
 
 class ExponentTerm(Term):
+
     def __init__(self, base, power):
         assert issubclass(type(base), Term)
         assert issubclass(type(power), Term)
         self.base = base
         self.power = power
 
-    def derivative(self):
+    def derivative(self, respect_to=None):
         # (u^v)' = (u^v)*(v'ln(u) + u'v/u)
         #            ^this is the same as 'self'
-        added_term_1 = self.power.derivative() * NaturalLog(self.base)
-        added_term_2 = (self.base.derivative() * self.power) / self.base
+        added_term_1 = self.power.derivative(respect_to) * NaturalLog(self.base)
+        added_term_2 = (self.base.derivative(respect_to) * self.power) / self.base
         return self * (added_term_1 + added_term_2)
 
     def __str__(self):
         base_string = str(self.base)
         power_string = str(self.power)
-        if len(power_string) > 1:
-            power_string = surround_with_parenthesis(power_string)
-        return "{0}^{1}".format(base_string, power_string)
+        return "{0}^({1})".format(base_string, power_string)
 
     def __eq__(self, other):
         if type(other) == ExponentTerm and other.base == self.base and other.power == self.power:
             return True
         return False
 
+    def evaluate(self, values):
+        return self.base.evaluate(values) ** self.power.evaluate(values)
+
+
 # -----------------------------------------------------------
 
 
+class Variable(Term):
+
+    def __init__(self, symbol):
+        assert type(symbol) == str
+        assert len(symbol) > 0
+        self.symbol = symbol
+
+    def derivative(self, respect_to=None):
+        if self == respect_to or respect_to is None:
+            return Constant(1)
+        return self
+
+    def to_string(self):
+        if len(self.symbol) > 1:
+            return surround_with_parenthesis(self.symbol)
+        return self.symbol
+
+    def __eq__(self, other):
+        # Variable('x') == Variable('x') and Variable('x') == 'x'
+        if type(other) == Variable and other.symbol == self.symbol:
+            return True
+        return self.symbol == other
+
+    def __str__(self):
+        return self.to_string()
+
+    def can_combine(self, other):
+        if type(other) == Variable:
+            if self == other:
+                return True
+        if type(other) == MultipliedTerm or type(other) == AddedTerm:
+            if self in other.terms:
+                return True
+        return False
+
+    def evaluate(self, values):
+        if self in values.keys():
+            # running values[self] doesn't work because the objects have to be the same
+            # not equivalent
+            index_of_self_equivalent = values.keys().index(self)
+            key = values.keys()[index_of_self_equivalent]
+            return values[key]
+        return self
 
 
 
