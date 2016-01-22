@@ -25,7 +25,6 @@ def combine(term):
 
 
 def simplify(term):
-
     if type(term) == AddedTerm:
         term.terms = [simplify(term_current) for term_current in term.terms
                       if simplify(term_current) != 0]
