@@ -18,7 +18,7 @@ x == 'x'
 
 Equations can be declared like this:
 ```
-from primitive_terms import Variable, PI, E
+from primitive_terms import Variable, E
 x = Variable('x')
 y = Variable('y')
 equation = x**2 + y - E
@@ -30,15 +30,33 @@ There are two ways to plug numbers into your equation. There is `equation.evalua
 
 For example:
 ```
+from primitive_terms import Variable, E
+x = Variable('x')
+y = Variable('y')
 equation = x**2 + y - E
 values = {x: 2, 'y': 1}
 equation.evaluate(values)
-# This is "e*(-1) + 5" or some equivalent
+# This is "e*(-1) + 5" or an equivalent
 # After simplification is implemented, it will just be "5 - e"
 equation.to_number(values)
 # This is 2.28171817154
 ```
 
+Be careful how you declare and assign your equations, because a term must always come first. If you do something like `5**x`, an error will occur because the integer and float arithmetic operators have not been overloaded. An alternative method to this would be to declare 5 as a constant, and then perform the exponentiation on it. For example:
+```
+from primitive_terms import Variable, Constant
+x = Variable('x')
+five_to_the_x = Constant(5)**x
+```
+
+Any of these equations will print with the proper parenthesis. For example:
+```
+print Variable('x') + Variable('y') + 5 - E**(Variable('z') + 2 + Variable('y'))
+# prints "x + y + 5 + (-1)*(e^(z + 2 + y))"
+```
+
+TODO: Fix the operators (they were changed and broken)
 
 TODO: Add simplification of expressions to get rid of things like x^(2) + 0
+
 TODO: Add more functions such as sin, cos, logarithms with different bases.
