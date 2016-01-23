@@ -6,7 +6,7 @@ def arithmetic_wrapper_convert_to_constants(arith_func):
     def wrapper(self, other):
         if type(other) == int or type(other) == float:
             other = Constant(other)
-        arith_func(self, other)
+        return arith_func(self, other)
     return wrapper
 
 
@@ -14,22 +14,6 @@ def replace_num_with_constant_if_constant(var):
     if type(var) == int or type(var) == float:
         return Constant(var)
     return var
-
-
-def combine(term):
-    assert issubclass(type(term), AddedTerm) or issubclass(type(term), MultipliedTerm)
-    if type(term) == AddedTerm:
-        nothing_found = True
-        while nothing_found:
-            nothing_found = False
-            for i, term1 in enumerate(term.terms):
-                for j, term2 in enumerate(term.terms):
-                    if i != j:
-                        pass
-
-    if type(term) == MultipliedTerm:
-        pass
-    return term
 
 
 def simplify(term):
@@ -381,7 +365,7 @@ class AddedTerm(Term):
             return str(self.terms[0])
         s = ""
         for term in self.terms[:-1]:
-            s = s + "{0}+".format(term)
+            s = s + "{0} + ".format(term)
         if len(self.terms) > 0:
             s = s + "{0}".format(self.terms[-1])
         return s
