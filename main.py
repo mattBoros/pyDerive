@@ -1,6 +1,6 @@
-from PrimitiveTerms import Variable
-from PrimitiveTerms import simplify
-from PrimitiveTerms import *
+from primitive_terms import Variable
+from primitive_terms import simplify
+from primitive_terms import *
 
 
 x = Variable('x')
