@@ -23,7 +23,7 @@ def replace_char_with_variable(index, string):
     index_after_replacement = index + len(replacement_string)
     return index_after_replacement, returned_string
 
-print evaluate_to_equation('x^2').evaluate({'x': 2})
+print evaluate_to_equation('x*y^2').derivative('y')
 
 
 

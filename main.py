@@ -2,35 +2,10 @@ from PrimitiveTerms import Variable
 from PrimitiveTerms import simplify
 from PrimitiveTerms import *
 
-"""
+
 x = Variable('x')
-der = (x**2).derivative()
-print der
-print der.evaluate({x: 5})
-"""
-print eval("Variable('x')**2")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#print (E ** x).evaluate({x : 1})
+#print x ** 2
 
 
 
