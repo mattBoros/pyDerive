@@ -31,13 +31,16 @@ There are two ways to plug numbers into your equation. There is `equation.evalua
 For example:
 ```
 from primitive_terms import Variable, E
+
 x = Variable('x')
 y = Variable('y')
 equation = x**2 + y - E
 values = {x: 2, 'y': 1}
+
 equation.evaluate(values)
 # This is "e*(-1) + 5" or an equivalent
 # After simplification is implemented, it will just be "5 - e"
+
 equation.to_number(values)
 # This is 2.28171817154
 ```
