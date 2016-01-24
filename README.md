@@ -1,5 +1,7 @@
 # pyDerive
-Note that not everything in this module works yet. It is still a work in progress.
+Take symbolic derivatives with Python.
+
+This project is still a work in progress. Everything answer and result that is produced using this module is correct, but not simplified. By the time it is done there will be simplification.
 
 ## Variables
 
