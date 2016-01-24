@@ -58,7 +58,7 @@ print Variable('x') + Variable('y') + 5 - E**(Variable('z') + 2 + Variable('y'))
 # prints "x + y + 5 + (-1)*(e^(z + 2 + y))"
 ```
 
-TODO:
+**TODO:**
 
 -Fix the operators (they were changed and broken)
 
