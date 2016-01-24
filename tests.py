@@ -1,4 +1,4 @@
-from primitive_terms import Variable, E, PI
+from primitive_terms import Variable, E, PI, simplify
 
 x = Variable('x')
 
@@ -6,9 +6,8 @@ equation = x**2 + x + 1
 values = {x: 5}
 print '"{0}" evaluated at x = 5 is {1}'.format(equation, equation.to_number(values))
 
-# EDIT in how add/multiplication/exponentiation works
-# so this is broken!!
-derivative_of_equation = x.derivative('x')
+
+derivative_of_equation = simplify(equation.derivative('x'))
 print 'The derivative of "{0}" is "{1}"\n'.format(equation, derivative_of_equation)
 
 
@@ -23,6 +22,11 @@ equation3 = x**2 + E + PI
 values3 = {'x': 5}
 print 'When x = 5, "{0}" evaluates to {1}'.format(equation3, equation3.evaluate(values3))
 print '...this is approximately {0}'.format(equation3.to_number(values3))
+
+
+
+
+
 
 
 

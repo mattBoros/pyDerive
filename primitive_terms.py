@@ -10,12 +10,6 @@ def arithmetic_wrapper_convert_to_constants(arith_func):
     return wrapper
 
 
-def replace_num_with_constant_if_constant(var):
-    if type(var) == int or type(var) == float:
-        return Constant(var)
-    return var
-
-
 def simplify(term):
     if type(term) == AddedTerm:
         term.terms = [simplify(term_current) for term_current in term.terms
@@ -51,6 +45,7 @@ def simplify(term):
 
 class Term(object):
 
+    @arithmetic_wrapper_convert_to_constants
     def __add__(self, other):
         if type(other) == AddedTerm:
             for term in other.terms:
@@ -64,9 +59,11 @@ class Term(object):
             return AddedTerm([self] + other.terms)
         return AddedTerm([self, other])
 
+    @arithmetic_wrapper_convert_to_constants
     def __sub__(self, other):
         return self + (Constant(-1) * other)
 
+    @arithmetic_wrapper_convert_to_constants
     def __mul__(self, other):
         if type(other) == MultipliedTerm:
             if self in other.terms:
@@ -75,9 +72,11 @@ class Term(object):
             return MultipliedTerm([self] + other.terms)
         return MultipliedTerm([self, other])
 
+    @arithmetic_wrapper_convert_to_constants
     def __div__(self, other):
         return self * (other**-1)
 
+    @arithmetic_wrapper_convert_to_constants
     def __pow__(self, power, modulo=None):
         return ExponentTerm(self, power)
 
@@ -284,11 +283,10 @@ class Variable(Term):
 
 class NaturalLog(Term):
 
-    def __init__(self, term):
-        if type(term) == int or type(term) == float:
-            term = Constant(term)
-        assert issubclass(type(term), Term)
-        self.term = term
+    @arithmetic_wrapper_convert_to_constants
+    def __init__(self, inner_term):
+        assert issubclass(type(inner_term), Term)
+        self.inner_term = inner_term
 
     @arithmetic_wrapper_convert_to_constants
     def __add__(self, other):
@@ -303,33 +301,33 @@ class NaturalLog(Term):
         return Term.__pow__(self, power)
 
     def __str__(self):
-        return 'ln({0})'.format(str(self.term))
+        return 'ln({0})'.format(str(self.inner_term))
 
     def __eq__(self, other):
-        if other == 0 and self.term == 1:
+        if other == 0 and self.inner_term == 1:
             return True
-        if other == 1 and self.term == E:
+        if other == 1 and self.inner_term == E:
             return True
         if type(other) == NaturalLog:
-            return simplify(other.term) == simplify(self.term)
+            return simplify(other.inner_term) == simplify(self.inner_term)
         return False
 
     def derivative(self, respect_to=None):
         if self.contains_variable(respect_to):
-            return self.term.derivative(respect_to) / self.term
+            return self.inner_term.derivative(respect_to) / self.inner_term
         return Constant(0)
 
     def evaluate(self, values=None):
-        evaluated_inner_term = self.term.evaluate(values)
+        evaluated_inner_term = self.inner_term.evaluate(values)
         if issubclass(type(evaluated_inner_term), Term):
             return NaturalLog(evaluated_inner_term)
         return NaturalLog(Constant(evaluated_inner_term))
 
     def contains_variable(self, var):
-        return self.term.contains_variable(var)
+        return self.inner_term.contains_variable(var)
 
     def to_number(self, values=None):
-        evaluated_inner_term = self.term.to_number(values)
+        evaluated_inner_term = self.inner_term.to_number(values)
         if type(evaluated_inner_term) == float or type(evaluated_inner_term) == int:
             return math.log(evaluated_inner_term)
         # otherwise it is a type of term
@@ -561,6 +559,87 @@ class ExponentTerm(Term):
         except TypeError:
             result = Constant(self.base.to_number(values)) ** self.power.to_number(values)
         return result
+
+
+# -----------------------------------------------------------
+
+
+class Sine(Term):
+
+    @arithmetic_wrapper_convert_to_constants
+    def __init__(self, inner_term):
+        assert issubclass(type(inner_term), Term)
+        self.inner_term = inner_term
+
+    def __str__(self):
+        return 'sin({0})'.format(str(self.inner_term))
+
+    def __eq__(self, other):
+        if type(other) == Sine and simplify(self.inner_term) == simplify(other.inner_term):
+            return True
+        # TODO: Add other ways to check for sine equality
+        return False
+
+    def derivative(self, respect_to=None):
+        if self.contains_variable(respect_to):
+            # (sin(u))' = cos(u)*u'
+            return Cosine(self.inner_term) * self.inner_term.derivative()
+        return Constant(0)
+
+    def evaluate(self, values=None):
+        evaluated_inner_term = self.inner_term.evaluate(values)
+        if issubclass(type(evaluated_inner_term), Term):
+            return Sine(evaluated_inner_term)
+        return Sine(Constant(evaluated_inner_term))
+
+    def contains_variable(self, var):
+        return self.inner_term.contains_variable(var)
+
+    def to_number(self, values=None):
+        evaluated_inner_term = self.inner_term.to_number(values)
+        if type(evaluated_inner_term) == float or type(evaluated_inner_term) == int:
+            return math.sin(evaluated_inner_term)
+        # otherwise it is a type of term
+        return Sine(evaluated_inner_term)
+
+
+class Cosine(Term):
+
+    @arithmetic_wrapper_convert_to_constants
+    def __init__(self, inner_term):
+        assert issubclass(type(inner_term), Term)
+        self.inner_term = inner_term
+
+    def __str__(self):
+        return 'cos({0})'.format(str(self.inner_term))
+
+    def __eq__(self, other):
+        if type(other) == Cosine and simplify(self.inner_term) == simplify(other.inner_term):
+            return True
+        # TODO: Add other ways to check for sine equality
+        return False
+
+    def derivative(self, respect_to=None):
+        if self.contains_variable(respect_to):
+            # (cos(u))' = sin(u)*u'*-1
+            return Sine(self.inner_term) * self.inner_term.derivative() * (-1)
+        return Constant(0)
+
+    def evaluate(self, values=None):
+        evaluated_inner_term = self.inner_term.evaluate(values)
+        if issubclass(type(evaluated_inner_term), Term):
+            return Cosine(evaluated_inner_term)
+        return Cosine(Constant(evaluated_inner_term))
+
+    def contains_variable(self, var):
+        return self.inner_term.contains_variable(var)
+
+    def to_number(self, values=None):
+        evaluated_inner_term = self.inner_term.to_number(values)
+        if type(evaluated_inner_term) == float or type(evaluated_inner_term) == int:
+            return math.cos(evaluated_inner_term)
+        # otherwise it is a type of term
+        return Cosine(evaluated_inner_term)
 
 
 # -----------------------------------------------------------
