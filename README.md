@@ -18,7 +18,7 @@ x == 'x'
 
 ## Equations
 
-Equations can be declared like this:
+Equations can be used like this:
 ```
 from primitive_terms import Variable, E
 x = Variable('x')
