@@ -1,7 +1,7 @@
 from primitive_terms import Variable
 
 
-def evaluate_to_equation(string):
+def string_to_equation(string):
     string = string.replace('^', '**')
     i = 0
     while i < len(string):
