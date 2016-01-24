@@ -58,8 +58,10 @@ print Variable('x') + Variable('y') + 5 - E**(Variable('z') + 2 + Variable('y'))
 # prints "x + y + 5 + (-1)*(e^(z + 2 + y))"
 ```
 
-TODO: Fix the operators (they were changed and broken)
+**TODO:**
 
-TODO: Add simplification of expressions to get rid of things like x^(2) + 0
+-Fix the operators (they were changed and broken)
 
-TODO: Add more functions such as sin, cos, logarithms with different bases.
+-Add simplification of expressions to get rid of things like x^(2) + 0
+
+-Add more functions such as sin, cos, logarithms with different bases.
