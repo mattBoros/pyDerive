@@ -79,9 +79,7 @@ print equation_from_string.to_number(values)
 
 **TODO:**
 
--Fix the operators (they were changed and broken)
-
--Add simplification of expressions to get rid of things like x^(2) + 0
+-Add simplification of expressions to get rid of things like "x^(2) + 0" and "x + (-1)*e"
 
 -Add more functions such as sin, cos, logarithms with different bases.
 
