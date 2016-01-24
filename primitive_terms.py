@@ -24,7 +24,7 @@ def simplify(term):
         return term
 
     elif type(term) == NaturalLog:
-        inner_term_simple = simplify(term.term)
+        inner_term_simple = simplify(term.inner_term)
         if inner_term_simple == E:
             return Constant(1)
         if inner_term_simple == 1:

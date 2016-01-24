@@ -39,6 +39,3 @@ print '...this is approximately {0}'.format(equation3.to_number(values3))
 
 
 
-
-
-
