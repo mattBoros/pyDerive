@@ -62,7 +62,7 @@ print Variable('x') + Variable('y') + 5 - E**(Variable('z') + 2 + Variable('y'))
 
 ## Evaluate strings to an equation
 
-You can evaluate strings into an equation by using the evaluate_to_equation function. For example:
+You can evaluate strings into an equation by using the string_to_equation function. For example:
 
 ```
 from string_to_equation import string_to_equation
