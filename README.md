@@ -58,6 +58,23 @@ print Variable('x') + Variable('y') + 5 - E**(Variable('z') + 2 + Variable('y'))
 # prints "x + y + 5 + (-1)*(e^(z + 2 + y))"
 ```
 
+## Evaluate strings to an equation
+
+You can evaluate strings into an equation by using the evaluate_to_equation function. For example:
+
+```
+from string_to_equation import string_to_equation
+
+equation_from_string = string_to_equation("x^2+1-y")
+print equation_from_string
+# Prints "x^(2) + 1 + (-1)*y"
+
+values = {x: 4, y: 2}
+print equation_from_string.to_number(values)
+# Prints 15
+```
+
+
 **TODO:**
 
 -Fix the operators (they were changed and broken)
@@ -65,3 +82,5 @@ print Variable('x') + Variable('y') + 5 - E**(Variable('z') + 2 + Variable('y'))
 -Add simplification of expressions to get rid of things like x^(2) + 0
 
 -Add more functions such as sin, cos, logarithms with different bases.
+
+-Create custom set of exceptions
