@@ -1,5 +1,7 @@
 # pyDerive
-Note that not everything in this module works yet. It is still a work in progress.
+Take symbolic derivatives with Python.
+
+This project is still a work in progress. Every result using these functions are correct, but not simplified. By the time it is done there will be simplification.
 
 ## Variables
 
@@ -16,7 +18,7 @@ x == 'x'
 
 ## Equations
 
-Equations can be declared like this:
+Equations can be used like this:
 ```
 from primitive_terms import Variable, E
 x = Variable('x')
@@ -60,7 +62,7 @@ print Variable('x') + Variable('y') + 5 - E**(Variable('z') + 2 + Variable('y'))
 
 ## Evaluate strings to an equation
 
-You can evaluate strings into an equation by using the evaluate_to_equation function. For example:
+You can evaluate strings into an equation by using the string_to_equation function. For example:
 
 ```
 from string_to_equation import string_to_equation
@@ -77,9 +79,7 @@ print equation_from_string.to_number(values)
 
 **TODO:**
 
--Fix the operators (they were changed and broken)
-
--Add simplification of expressions to get rid of things like x^(2) + 0
+-Add simplification of expressions to get rid of things like "x^(2) + 0" and "x + (-1)*e"
 
 -Add more functions such as sin, cos, logarithms with different bases.
 
