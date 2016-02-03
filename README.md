@@ -69,7 +69,7 @@ equation_from_string = string_to_equation("x^2+1-y")
 print equation_from_string
 # Prints "x^(2) + 1 + (-1)*y"
 
-values = {x: 4, y: 2}
+values = {'x': 4, 'y': 2}
 print equation_from_string.to_number(values)
 # Prints 15
 ```
