@@ -11,11 +11,15 @@ to the variable itself or is equal to None.
 
 """
 import util
-import Term
-import Constant, AddedTerm, MultipliedTerm, ExponentTerm
+import term
+import constant, addedterm, multipliedterm, exponentterm
 
 
-class Variable(Term.Term):
+class Variable(term.Term):
+
+    #
+    # TODO: Add __radd__, __rsub__, etc. methods here
+    #
 
     def __init__(self, symbol):
         assert type(symbol) == str
@@ -24,28 +28,28 @@ class Variable(Term.Term):
 
     @util.arithmetic_wrapper_convert_to_constants
     def __add__(self, other):
-        if type(other) == MultipliedTerm.MultipliedTerm:
+        if type(other) == multipliedterm.MultipliedTerm:
             if self in other.terms:
                 # x + x*y*z = x*(1 + y*z)
                 other.terms.remove(self)
                 return self*(other + 1)
-        elif type(other) == AddedTerm.AddedTerm:
+        elif type(other) == addedterm.AddedTerm:
             if self in other.terms:
                 # x + y + z + x = 2*x + y + z
                 other.terms.remove(self)
                 return self*2 + other
-        elif type(other) == ExponentTerm:
+        elif type(other) == exponentterm:
             if other.base == self:
                 return self ** (other.power + 1)
-        return Term.Term.__add__(self, other)
+        return term.Term.__add__(self, other)
 
     @util.arithmetic_wrapper_convert_to_constants
     def __mul__(self, other):
-        return Term.Term.__mul__(self, other)
+        return term.Term.__mul__(self, other)
 
     @util.arithmetic_wrapper_convert_to_constants
     def __pow__(self, power, modulo=None):
-        return Term.Term.__pow__(self, power)
+        return term.Term.__pow__(self, power)
 
     def __eq__(self, other):
         # Variable('x') == Variable('x') and Variable('x') == 'x'
@@ -60,7 +64,7 @@ class Variable(Term.Term):
 
     def derivative(self, respect_to=None):
         if self == respect_to or respect_to is None:
-            return Constant.Constant(1)
+            return constant.Constant(1)
         return self
 
     def evaluate(self, values=None):

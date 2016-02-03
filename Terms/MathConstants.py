@@ -1,8 +1,8 @@
 import math
-import SpecialConstant
+import specialconstant
 
-E = SpecialConstant.SpecialConstant(math.e, 'e')
-PI = SpecialConstant.SpecialConstant(math.pi, 'pi')
+E = specialconstant.SpecialConstant(math.e, 'e')
+PI = specialconstant.SpecialConstant(math.pi, 'pi')
 
 
 

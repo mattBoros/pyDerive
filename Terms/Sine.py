@@ -1,14 +1,14 @@
 import math
 import util
-import Term
-import Constant, Cosine
+import term
+import constant, cosine
 
 
-class Sine(Term.Term):
+class Sine(term.Term):
 
     @util.arithmetic_wrapper_convert_to_constants
     def __init__(self, inner_term):
-        assert issubclass(type(inner_term), Term.Term)
+        assert issubclass(type(inner_term), term.Term)
         self.inner_term = inner_term
 
     def __str__(self):
@@ -23,14 +23,14 @@ class Sine(Term.Term):
     def derivative(self, respect_to=None):
         if self.contains_variable(respect_to):
             # (sin(u))' = cos(u)*u'
-            return Cosine.Cosine(self.inner_term) * self.inner_term.derivative()
-        return Constant.Constant(0)
+            return cosine.Cosine(self.inner_term) * self.inner_term.derivative()
+        return constant.Constant(0)
 
     def evaluate(self, values=None):
         evaluated_inner_term = self.inner_term.evaluate(values)
-        if issubclass(type(evaluated_inner_term), Term):
+        if issubclass(type(evaluated_inner_term), term):
             return Sine(evaluated_inner_term)
-        return Sine(Constant.Constant(evaluated_inner_term))
+        return Sine(constant.Constant(evaluated_inner_term))
 
     def contains_variable(self, var):
         return self.inner_term.contains_variable(var)

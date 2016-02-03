@@ -15,10 +15,10 @@ Constant(1.5) == 1.5 -> True
 
 """
 import util
-import Term
+import term
 
 
-class Constant(Term.Term):
+class Constant(term.Term):
 
     def __init__(self, number):
         assert type(number) == int or type(number) == float
@@ -28,19 +28,19 @@ class Constant(Term.Term):
     def __add__(self, other):
         if type(other) == Constant:
             return Constant(self.number + other.number)
-        return Term.Term.__add__(self, other)
+        return term.Term.__add__(self, other)
 
     @util.arithmetic_wrapper_convert_to_constants
     def __mul__(self, other):
         if type(other) == Constant:
             return Constant(self.number * other.number)
-        return Term.Term.__mul__(self, other)
+        return term.Term.__mul__(self, other)
 
     @util.arithmetic_wrapper_convert_to_constants
     def __pow__(self, power, modulo=None):
         if type(power) == Constant:
             return Constant(self.number ** power.number)
-        return Term.Term.__pow__(self, power)
+        return term.Term.__pow__(self, power)
 
     def __eq__(self, other):
         if type(other) == Constant and self.number == other.number:

@@ -1,27 +1,27 @@
 import util
-import Term
-import Constant, NaturalLog
+import term
+import constant, naturallog
 
 
-class ExponentTerm(Term.Term):
+class ExponentTerm(term.Term):
 
     def __init__(self, base, power):
-        assert issubclass(type(base), Term.Term)
-        assert issubclass(type(power), Term.Term)
+        assert issubclass(type(base), term.Term)
+        assert issubclass(type(power), term.Term)
         self.base = base
         self.power = power
 
     @util.arithmetic_wrapper_convert_to_constants
     def __add__(self, other):
-        return Term.Term.__add__(self, other)
+        return term.Term.__add__(self, other)
 
     @util.arithmetic_wrapper_convert_to_constants
     def __mul__(self, other):
-        return Term.Term.__mul__(self, other)
+        return term.Term.__mul__(self, other)
 
     @util.arithmetic_wrapper_convert_to_constants
     def __pow__(self, power, modulo=None):
-        return Term.Term.__pow__(self, power)
+        return term.Term.__pow__(self, power)
 
     def __str__(self):
         base_string = str(self.base)
@@ -37,7 +37,7 @@ class ExponentTerm(Term.Term):
         if self.base.contains_variable(respect_to) and self.power.contains_variable(respect_to):
             # (u^v)' = (u^v)*(v'*ln(u) + u'v/u)
             #            ^this is equivalent to 'self'
-            added_term_1 = self.power.derivative(respect_to) * NaturalLog.NaturalLog(self.base)
+            added_term_1 = self.power.derivative(respect_to) * naturallog.NaturalLog(self.base)
             added_term_2 = (self.base.derivative(respect_to) * self.power) / self.base
             return self * (added_term_1 + added_term_2)
         elif self.base.contains_variable(respect_to):
@@ -48,15 +48,15 @@ class ExponentTerm(Term.Term):
             # (u^v)' with respect to u
             # is ln(u)*v'*u^v
             #              ^with is equivalent to 'self'
-            return self * NaturalLog.NaturalLog(self.base) * self.power.derivative(respect_to)
+            return self * naturallog.NaturalLog(self.base) * self.power.derivative(respect_to)
         else:
-            return Constant.Constant(0)
+            return constant.Constant(0)
 
     def evaluate(self, values=None):
         try:
             result = self.base.evaluate(values) ** self.power.evaluate(values)
         except TypeError:
-            result = Constant.Constant(self.base.evaluate(values)) ** self.power.evaluate(values)
+            result = constant.Constant(self.base.evaluate(values)) ** self.power.evaluate(values)
         return result
 
     def contains_variable(self, var):
@@ -66,7 +66,7 @@ class ExponentTerm(Term.Term):
         try:
             result = self.base.to_number(values) ** self.power.to_number(values)
         except TypeError:
-            result = Constant.Constant(self.base.to_number(values)) ** self.power.to_number(values)
+            result = constant.Constant(self.base.to_number(values)) ** self.power.to_number(values)
         return result
 
 

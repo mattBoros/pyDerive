@@ -6,11 +6,11 @@ and others.
 
 """
 import util
-import Term
-import Constant
+import term
+import constant
 
 
-class SpecialConstant(Term.Term):
+class SpecialConstant(term.Term):
 
     def __init__(self, number, string_representation=None):
         assert type(number) == int or type(number) == float
@@ -20,20 +20,20 @@ class SpecialConstant(Term.Term):
     @util.arithmetic_wrapper_convert_to_constants
     def __add__(self, other):
         if self == other:
-            return Constant.Constant(2) * self
-        return Term.Term.__add__(self, other)
+            return constant.Constant(2) * self
+        return term.Term.__add__(self, other)
 
     @util.arithmetic_wrapper_convert_to_constants
     def __mul__(self, other):
         # do thing here
-        return Term.Term.__mul__(self, other)
+        return term.Term.__mul__(self, other)
 
     def __eq__(self, other):
         if type(other) == SpecialConstant:
             if other.string_representation == self.string_representation \
                     or other.number == self.number:
                 return True
-        if type(other) == Constant and other.number == self.number:
+        if type(other) == constant and other.number == self.number:
             return True
         return False
 
@@ -42,7 +42,7 @@ class SpecialConstant(Term.Term):
 
     @staticmethod
     def derivative(self, respect_to=None):
-        return Constant.Constant(0)
+        return constant.Constant(0)
 
     def evaluate(self, values=None):
         return self

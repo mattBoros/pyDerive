@@ -18,38 +18,53 @@ class Term(object):
 
     @util.arithmetic_wrapper_convert_to_constants
     def __add__(self, other):
-        if type(other) == AddedTerm.AddedTerm:
+        if type(other) == addedterm.AddedTerm:
             for term in other.terms:
-                if type(term) == MultipliedTerm.MultipliedTerm and self in term.terms:
+                if type(term) == multipliedterm.MultipliedTerm and self in term.terms:
                     # x + (a + b + x*y*z) = a + b + x + x*y*z = a + b + x(1 + y*z)
                     term.terms.remove(self)
                     replacement_term = self * (term + 1)
                     other.terms.remove(term)
                     other.terms.append(replacement_term)
                     return other
-            return AddedTerm.AddedTerm([self] + other.terms)
-        return AddedTerm.AddedTerm([self, other])
+            return addedterm.AddedTerm([self] + other.terms)
+        return addedterm.AddedTerm([self, other])
+
+    def __radd__(self, other):
+        return self + other
 
     @util.arithmetic_wrapper_convert_to_constants
     def __sub__(self, other):
-        return self + (Constant.Constant(-1) * other)
+        return self + (constant.Constant(-1) * other)
+
+    def __rsub__(self, other):
+        return (constant.Constant(-1) * self) + other
 
     @util.arithmetic_wrapper_convert_to_constants
     def __mul__(self, other):
-        if type(other) == MultipliedTerm:
+        if type(other) == multipliedterm:
             if self in other.terms:
                 other.terms.remove(self)
                 return self * (other + 1)
-            return MultipliedTerm.MultipliedTerm([self] + other.terms)
-        return MultipliedTerm.MultipliedTerm([self, other])
+            return multipliedterm.MultipliedTerm([self] + other.terms)
+        return multipliedterm.MultipliedTerm([self, other])
+
+    def __rmul__(self, other):
+        return self * other
 
     @util.arithmetic_wrapper_convert_to_constants
     def __div__(self, other):
         return self * (other**-1)
 
+    def __rdiv__(self, other):
+        return (self**-1) * other
+
     @util.arithmetic_wrapper_convert_to_constants
     def __pow__(self, power, modulo=None):
-        return ExponentTerm.ExponentTerm(self, power)
+        return exponentterm.ExponentTerm(self, power)
+
+    def __rpow__(self, power, modulo=None):
+        return self**power
 
     def __str__(self):
         return "There is a type which is a subclass of Term, but doesn't override __str__."
@@ -73,10 +88,10 @@ class Term(object):
         print "There is a subclass of Term which does not override to_number."
 
 
-import AddedTerm
-import MultipliedTerm
-import Constant
-import ExponentTerm
+import addedterm
+import multipliedterm
+import constant
+import exponentterm
 
 
 

@@ -1,28 +1,28 @@
 import math
 
-import Term
+import term
 import util
-import Constant, MathConstants
+import constant, mathconstants
 
 
-class NaturalLog(Term.Term):
+class NaturalLog(term.Term):
 
     @util.arithmetic_wrapper_convert_to_constants
     def __init__(self, inner_term):
-        assert issubclass(type(inner_term), Term.Term)
+        assert issubclass(type(inner_term), term.Term)
         self.inner_term = inner_term
 
     @util.arithmetic_wrapper_convert_to_constants
     def __add__(self, other):
-        return Term.Term.__add__(self, other)
+        return term.Term.__add__(self, other)
 
     @util.arithmetic_wrapper_convert_to_constants
     def __mul__(self, other):
-        return Term.Term.__mul__(self, other)
+        return term.Term.__mul__(self, other)
 
     @util.arithmetic_wrapper_convert_to_constants
     def __pow__(self, power, modulo=None):
-        return Term.Term.__pow__(self, power)
+        return term.Term.__pow__(self, power)
 
     def __str__(self):
         return 'ln({0})'.format(str(self.inner_term))
@@ -30,7 +30,7 @@ class NaturalLog(Term.Term):
     def __eq__(self, other):
         if other == 0 and self.inner_term == 1:
             return True
-        if other == 1 and self.inner_term == MathConstants.E:
+        if other == 1 and self.inner_term == mathconstants.E:
             return True
         if type(other) == NaturalLog:
             return util.simplify(other.inner_term) == util.simplify(self.inner_term)
@@ -39,13 +39,13 @@ class NaturalLog(Term.Term):
     def derivative(self, respect_to=None):
         if self.contains_variable(respect_to):
             return self.inner_term.derivative(respect_to) / self.inner_term
-        return Constant.Constant(0)
+        return constant.Constant(0)
 
     def evaluate(self, values=None):
         evaluated_inner_term = self.inner_term.evaluate(values)
-        if issubclass(type(evaluated_inner_term), Term):
+        if issubclass(type(evaluated_inner_term), term):
             return NaturalLog(evaluated_inner_term)
-        return NaturalLog(Constant.Constant(evaluated_inner_term))
+        return NaturalLog(constant.Constant(evaluated_inner_term))
 
     def contains_variable(self, var):
         return self.inner_term.contains_variable(var)

@@ -1,27 +1,27 @@
 import util
-import Term
+import term
 
 
-class AddedTerm(Term.Term):
+class AddedTerm(term.Term):
 
     def __init__(self, terms):
         for term in terms:
-            assert issubclass(type(term), Term.Term)
+            assert issubclass(type(term), term.Term)
         self.terms = terms
 
     @util.arithmetic_wrapper_convert_to_constants
     def __add__(self, other):
         if type(other) == AddedTerm:
             return AddedTerm(self.terms + other.terms)
-        return Term.Term.__add__(self, other)
+        return term.Term.__add__(self, other)
 
     @util.arithmetic_wrapper_convert_to_constants
     def __mul__(self, other):
-        return Term.Term.__mul__(self, other)
+        return term.Term.__mul__(self, other)
 
     @util.arithmetic_wrapper_convert_to_constants
     def __pow__(self, power, modulo=None):
-        return Term.Term.__pow__(self, power)
+        return term.Term.__pow__(self, power)
 
     def __str__(self):
         if len(self.terms) == 0:
