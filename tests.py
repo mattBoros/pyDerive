@@ -1,36 +1,88 @@
-from primitive_terms import Variable, E, PI, simplify
+from util import simplify
+
+
+
+# constant showcase (lol)
+from Terms.MathConstants import PI, E
+
+for constant in E, PI:
+    print "{0} ~~ {1}".format(constant, constant.to_number())
+
+
+
+# variable creation
+from Terms.Variable import Variable
 
 x = Variable('x')
-
-equation = x**2 + x + 1
-values = {x: 5}
-print '"{0}" evaluated at x = 5 is {1}'.format(equation, equation.to_number(values))
-
-
-derivative_of_equation = simplify(equation.derivative('x'))
-print 'The derivative of "{0}" is "{1}"\n'.format(equation, derivative_of_equation)
-
-
 y = Variable('y')
-
-equation2 = x**2 + x*y + y**2
-values2 = {'x': 1}
-print 'When x = 1, "{0}" evaluates to "{1}"\n'.format(equation2, equation2.evaluate(values2))
-
-
-equation3 = x**2 + E + PI
-values3 = {'x': 5}
-print 'When x = 5, "{0}" evaluates to {1}'.format(equation3, equation3.evaluate(values3))
-print '...this is approximately {0}'.format(equation3.to_number(values3))
+z = Variable('z')
+print ""
 
 
 
+# derivative showcase
+equation = x ** 2 + x + 1
+derivative = simplify(equation.derivative())
+
+print 'The derivative of "{0}" is "{1}"'\
+        .format(equation, derivative)
+print ""
 
 
 
+# partial derivative showcase
+equation = x ** 2 + x * y + y ** 2
+partial_derivative = simplify(equation.derivative('x'))
+
+print 'The derivative of "{0}" with respect to "x" is "{1}"'\
+        .format(equation, partial_derivative)
+print ""
 
 
 
+# string -> equation showcase
+from string_to_equation import string_to_equation
+
+string = "x^2 - 2 + y"
+equation = string_to_equation(string)
+
+print 'It evaluated to "{0}"'.format(equation)
+print ""
+
+
+
+# sine, cosine, natural log showcase
+from Terms.Sine import Sine
+from Terms.Cosine import Cosine
+from Terms.NaturalLog import NaturalLog
+
+equation = Sine(x) + Cosine(y) + NaturalLog(z)
+derivative = simplify(equation.derivative())
+
+print 'The derivative of "{0}" is "{1}"'\
+        .format(equation, derivative)
+print ""
+
+
+
+# evaluate showcase
+equation = x**2 + x + PI + E
+values = {x: 2}
+approx_value = simplify(equation.evaluate(values))
+
+print '"{0}" evaluated at x = 2 is "{1}"'\
+        .format(equation, approx_value)
+print ""
+
+
+
+# to_number showcase
+equation = x**2 + x + PI + E
+values = {x: 2}
+approx_value = simplify(equation.to_number(values))
+
+print '"{0}" at x = 2 is about "{1}"'\
+        .format(equation, approx_value)
 
 
 

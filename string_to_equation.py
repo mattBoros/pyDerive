@@ -1,8 +1,9 @@
-from primitive_terms import Variable
+from Terms.Variable import Variable
 
 
 def string_to_equation(string):
     string = string.replace('^', '**')
+    string = string.replace(' ', '')
     i = 0
     while i < len(string):
         char_at_i = string[i]
