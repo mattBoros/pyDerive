@@ -5,7 +5,7 @@ This project is still a work in progress.
 
 ## Variables
 
-After importing the Variable class from primitive_terms, you can declare a variable like this:
+After importing the Variable class from terms.variable, you can declare a variable like this:
 ```
 x = Variable('x')
 ```
@@ -20,9 +20,12 @@ x == 'x'
 
 Equations can be used like this:
 ```
-from primitive_terms import Variable, E
+from terms.variable import Variable
+from terms.mathconstants import E
+
 x = Variable('x')
 y = Variable('y')
+
 equation = x**2 + y - E
 ```
 
@@ -32,10 +35,12 @@ There are two ways to plug numbers into your equation. There is `equation.evalua
 
 For example:
 ```
-from primitive_terms import Variable, E
+from terms.variable import Variable
+from terms.mathconstants import E
 
 x = Variable('x')
 y = Variable('y')
+
 equation = x**2 + y - E
 values = {x: 2, 'y': 1}
 
@@ -45,13 +50,6 @@ equation.evaluate(values)
 
 equation.to_number(values)
 # This is 2.28171817154
-```
-
-Be careful how you declare and assign your equations, because a term must always come first. If you do something like `5**x`, an error will occur because the integer and float arithmetic operators have not been overloaded. An alternative method to this would be to declare 5 as a constant, and then perform the exponentiation on it. For example:
-```
-from primitive_terms import Variable, Constant
-x = Variable('x')
-five_to_the_x = Constant(5)**x
 ```
 
 Any of these equations will print with the proper parenthesis. For example:
