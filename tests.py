@@ -1,6 +1,8 @@
 from util import simplify
 
+from terms.variable import Variable
 
+x = Variable()
 
 """
 # constant showcase (lol)
