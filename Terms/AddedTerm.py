@@ -2,7 +2,7 @@ import util
 import term
 
 
-class MultipliedTerm(term.Term):
+class AddedTerm(term.Term):
 
     def __init__(self, terms):
         for current_term in terms:
@@ -11,6 +11,8 @@ class MultipliedTerm(term.Term):
 
     @util.arithmetic_wrapper_convert_to_constants
     def __add__(self, other):
+        if type(other) == AddedTerm:
+            return AddedTerm(self.terms + other.terms)
         return term.Term.__add__(self, other)
 
     @util.arithmetic_wrapper_convert_to_constants
@@ -22,23 +24,18 @@ class MultipliedTerm(term.Term):
         return term.Term.__pow__(self, power)
 
     def __str__(self):
+        if len(self.terms) == 0:
+            return ""
         if len(self.terms) == 1:
             return str(self.terms[0])
         s = ""
-        for term in self.terms[:-1]:
-            term_string = str(term)
-            if len(term_string) > 1:
-                term_string = util.surround_with_parenthesis(term_string)
-            s = s + "{0}*".format(term_string)
-        if len(self.terms) > 0:
-            last_term_string = str(self.terms[-1])
-            if len(last_term_string) > 1:
-                last_term_string = util.surround_with_parenthesis(last_term_string)
-            s = s + "{0}".format(last_term_string)
-        return s
+        for i in xrange(len(self.terms) - 1):
+            term = self.terms[i]
+            s = s + "{0} + ".format(term)
+        return s + "{0}".format(self.terms[-1])
 
     def __eq__(self, other):
-        if type(other) == MultipliedTerm:
+        if type(other) == AddedTerm:
             if len(self.terms) != len(other.terms):
                 return False
             self.terms = sorted(self.terms, key=type)
@@ -50,38 +47,42 @@ class MultipliedTerm(term.Term):
         return False
 
     def derivative(self, respect_to=None):
-        # (uv)' = u'v + uv'
-        if len(self.terms) == 1:
-            return self.terms[0].derivative(respect_to)
-        if len(self.terms) == 2:
-            u = self.terms[0]
-            v = self.terms[1]
-            return u.derivative(respect_to) * v + u * v.derivative(respect_to)
-        halfway_point = len(self.terms)/2
-        u = MultipliedTerm(self.terms[:halfway_point])
-        v = MultipliedTerm(self.terms[halfway_point:])
-        return u.derivative(respect_to) * v + u * v.derivative(respect_to)
+        # (u + v)' = u' + v'
+        return AddedTerm([term.derivative(respect_to) for term in self.terms])
 
     def evaluate(self, values=None):
-        p = 1
+        s = 0
         for term in self.terms:
             try:
-                p = term.evaluate(values) * p
+                s = term.evaluate(values) + s
             except TypeError:
-                p = p * term.evaluate(values)
-        return p
+                s = s + term.evaluate(values)
+        return s
 
     def contains_variable(self, var):
         return any(term.contains_variable(var) for term in self.terms)
 
     def to_number(self, values=None):
-        p = 1
+        s = 0
         for term in self.terms:
             try:
-                p = term.to_number(values) * p
+                s = term.to_number(values) + s
             except TypeError:
-                p = p * term.to_number(values)
-        return p
+                s = s + term.to_number(values)
+        return s
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

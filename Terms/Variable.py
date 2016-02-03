@@ -17,10 +17,6 @@ import constant, addedterm, multipliedterm, exponentterm
 
 class Variable(term.Term):
 
-    #
-    # TODO: Add __radd__, __rsub__, etc. methods here
-    #
-
     def __init__(self, symbol):
         assert type(symbol) == str
         assert len(symbol) > 0

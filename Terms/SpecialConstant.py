@@ -8,6 +8,7 @@ and others.
 import util
 import term
 import constant
+import exponentterm
 
 
 class SpecialConstant(term.Term):
@@ -25,7 +26,8 @@ class SpecialConstant(term.Term):
 
     @util.arithmetic_wrapper_convert_to_constants
     def __mul__(self, other):
-        # do thing here
+        if self == other:
+            return exponentterm.ExponentTerm(self, constant.Constant(2))
         return term.Term.__mul__(self, other)
 
     def __eq__(self, other):

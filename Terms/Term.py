@@ -63,8 +63,9 @@ class Term(object):
     def __pow__(self, power, modulo=None):
         return exponentterm.ExponentTerm(self, power)
 
+    @util.arithmetic_wrapper_convert_to_constants
     def __rpow__(self, power, modulo=None):
-        return self**power
+        return power ** self
 
     def __str__(self):
         return "There is a type which is a subclass of Term, but doesn't override __str__."
@@ -88,10 +89,14 @@ class Term(object):
         print "There is a subclass of Term which does not override to_number."
 
 
+import constant
 import addedterm
 import multipliedterm
-import constant
 import exponentterm
+
+
+
+
 
 
 

@@ -3,6 +3,18 @@
   <component name="ChangeListManager">
     <list default="true" id="c26241d2-02b6-4a80-8b1d-db9d2c10d489" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Terms/AddedTerm.py" afterPath="$PROJECT_DIR$/Terms/AddedTerm.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Terms/Cosine.py" afterPath="$PROJECT_DIR$/Terms/Cosine.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Terms/DifferentialQuotient.py" afterPath="$PROJECT_DIR$/Terms/DifferentialQuotient.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Terms/ExponentTerm.py" afterPath="$PROJECT_DIR$/Terms/ExponentTerm.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Terms/MathConstants.py" afterPath="$PROJECT_DIR$/Terms/MathConstants.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Terms/MultipliedTerm.py" afterPath="$PROJECT_DIR$/Terms/MultipliedTerm.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Terms/NaturalLog.py" afterPath="$PROJECT_DIR$/Terms/NaturalLog.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Terms/Sine.py" afterPath="$PROJECT_DIR$/Terms/Sine.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Terms/SpecialConstant.py" afterPath="$PROJECT_DIR$/Terms/SpecialConstant.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Terms/Term.py" afterPath="$PROJECT_DIR$/Terms/Term.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Terms/Variable.py" afterPath="$PROJECT_DIR$/Terms/Variable.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/terms/constant.py" afterPath="$PROJECT_DIR$/terms/constant.py" />
     </list>
     <ignored path="Calculus.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,12 +35,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="tests.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tests.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2244898">
-              <caret line="23" column="12" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="constant.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/terms/constant.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.71938777">
+              <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+              <folding>
+                <element signature="e#532#543#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -43,6 +67,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="UPDATE_TYPE" value="REBASE" />
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -98,8 +123,8 @@
         <option value="$PROJECT_DIR$/terms/exponentterm.py" />
         <option value="$PROJECT_DIR$/terms/differentialquotient.py" />
         <option value="$PROJECT_DIR$/terms/cosine.py" />
-        <option value="$PROJECT_DIR$/terms/constant.py" />
         <option value="$PROJECT_DIR$/terms/addedterm.py" />
+        <option value="$PROJECT_DIR$/terms/constant.py" />
       </list>
     </option>
   </component>
@@ -488,7 +513,13 @@
       <option name="project" value="LOCAL" />
       <updated>1454507952516</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Made package and module names lowercase.">
+      <created>1454508007434</created>
+      <option name="number" value="00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1454508007434</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -502,9 +533,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24627976" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24627976" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20915033" sideWeight="0.50595236" order="7" side_tool="true" content_ui="tabs" />
@@ -862,16 +893,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/terms/constant.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60714287">
-          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
-          <folding>
-            <element signature="e#532#543#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/terms/ExponentTerm.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.78571427">
@@ -918,9 +939,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2244898">
-          <caret line="23" column="12" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="16" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/terms/constant.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.71938777">
+          <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+          <folding>
+            <element signature="e#532#543#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
