@@ -3,7 +3,7 @@ from util import simplify
 
 
 # constant showcase (lol)
-from Terms.MathConstants import PI, E
+from terms.mathconstants import PI, E
 
 for constant in E, PI:
     print "{0} ~~ {1}".format(constant, constant.to_number())
@@ -11,7 +11,7 @@ for constant in E, PI:
 
 
 # variable creation
-from Terms.Variable import Variable
+from terms.variable import Variable
 
 x = Variable('x')
 y = Variable('y')
@@ -52,9 +52,9 @@ print ""
 
 
 # sine, cosine, natural log showcase
-from Terms.Sine import Sine
-from Terms.Cosine import Cosine
-from Terms.NaturalLog import NaturalLog
+from terms.sine import Sine
+from terms.cosine import Cosine
+from terms.naturallog import NaturalLog
 
 equation = Sine(x) + Cosine(y) + NaturalLog(z)
 derivative = simplify(equation.derivative())

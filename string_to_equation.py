@@ -1,4 +1,4 @@
-from Terms.Variable import Variable
+from terms.variable import Variable
 
 
 def string_to_equation(string):
