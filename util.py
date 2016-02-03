@@ -40,7 +40,7 @@ def simplify(term):
 
     elif type(term) == naturallog.NaturalLog:
         inner_term_simple = simplify(term.inner_term)
-        if inner_term_simple == terms.MathConstants.E:
+        if inner_term_simple == mathconstants.E:
             return constant.Constant(1)
         if inner_term_simple == 1:
             return constant.Constant(0)
@@ -57,9 +57,8 @@ def simplify(term):
 
     return term
 
-from terms import constant
+from terms import constant, mathconstants
 from terms import addedterm, multipliedterm, exponentterm, naturallog
-import terms
 
 
 

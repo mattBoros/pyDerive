@@ -1,10 +1,7 @@
 from util import simplify
 
-from terms.variable import Variable
 
-x = Variable()
 
-"""
 # constant showcase (lol)
 from terms.mathconstants import PI, E
 
@@ -86,9 +83,6 @@ approx_value = simplify(equation.to_number(values))
 
 print '"{0}" at x = 2 is about "{1}"'\
         .format(equation, approx_value)
-"""
-
-
 
 
 
