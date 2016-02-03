@@ -65,7 +65,8 @@ You can evaluate strings into an equation by using the string_to_equation functi
 ```
 from string_to_equation import string_to_equation
 
-equation_from_string = string_to_equation("x^2+1-y")
+equation_from_string, variables = string_to_equation("x^2+1-y")
+#The string_to_equation function returns the equation and the variables used in that equation.
 print equation_from_string
 # Prints "x^(2) + 1 + (-1)*y"
 
