@@ -2,6 +2,8 @@ from terms.variable import Variable
 
 
 def string_to_equation(string):
+    variable_list = []
+
     string = string.replace('^', '**')
     string = string.replace(' ', '')
     i = 0
@@ -9,9 +11,10 @@ def string_to_equation(string):
         char_at_i = string[i]
         if char_at_i not in ['+', '-', '*', '/', ')', '('] and char_at_i.isdigit() == False:
             i, string = replace_char_with_variable(i, string)
+            variable_list.append(Variable(char_at_i))
         else:
             i += 1
-    return eval(string)
+    return eval(string), tuple(variable_list)
 
 
 def replace_char_with_variable(index, string):

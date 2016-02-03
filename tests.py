@@ -44,9 +44,10 @@ print ""
 from string_to_equation import string_to_equation
 
 string = "x^2 - 2 + y"
-equation = string_to_equation(string)
+equation, variables = string_to_equation(string)
 
-print 'It evaluated to "{0}"'.format(equation)
+print 'The given string evaluated to the equation "{0}"'.format(equation)
+print 'Variables used in the equation are {0}'.format([str(v) for v in variables])
 print ""
 
 
@@ -83,8 +84,3 @@ approx_value = simplify(equation.to_number(values))
 
 print '"{0}" at x = 2 is about "{1}"'\
         .format(equation, approx_value)
-
-
-
-
-
