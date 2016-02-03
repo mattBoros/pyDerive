@@ -1,3 +1,15 @@
+"""
+ -- Variable --
+The Variable class is meant to represent a mathematical
+variable. It holds a symbol, which is normally one letter
+long like 'x' or 'y'. Variables are equal to their symbols
+and any other variable which has the same symbol.
+
+When running the derivative function on a variable, it
+returns Constant(1) only if the respect_to argument is equal
+to the variable itself or is equal to None.
+
+"""
 import util
 import Term
 import Constant, AddedTerm, MultipliedTerm, ExponentTerm

@@ -1,3 +1,19 @@
+"""
+ -- Constant --
+The Constant class holds any number whose string representation
+is the same as the number itself. For example, the number 10 is
+represented as "10", so it is a constant. Pi is represented as
+"pi," even though it is equal to 3.14159... Therefore pi is not
+a Constant.
+
+A Constant is equal to any other Constant that holds the same
+number, or any float or integer that is the same number as the
+number that the Constant holds. For example:
+
+Constant(1.5) == Constant(1.5) -> True
+Constant(1.5) == 1.5 -> True
+
+"""
 import util
 import Term
 

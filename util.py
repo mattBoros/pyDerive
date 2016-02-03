@@ -6,6 +6,10 @@ def surround_with_parenthesis(s):
 
 
 def arithmetic_wrapper_convert_to_constants(arith_func):
+    """
+    This is a wrapper for arithmetic operators to ensure that any
+    float or integer arguments are converted into Constants.
+    """
     def wrapper(self, other):
         if type(other) == int or type(other) == float:
             other = Constant.Constant(other)

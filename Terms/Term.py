@@ -1,3 +1,16 @@
+"""
+ -- Term --
+The most basic class in this module is the Term class. Every
+other class inherits from Term. Term overloads the arithmetic
+operators, and also overrides equal, not equal, and string
+operators. It also sets up basic derivative, contains_variable,
+evaluate, and to_number for subclasses of Term to override.
+
+Unfortunately since each Term subclass relies on each other and
+on other Term subclasses, they cannot be split into different
+files because of cyclic importing.
+
+"""
 import util
 
 

@@ -1,3 +1,10 @@
+"""
+ -- SpecialConstant --
+SpecialConstant class is for any constant which cannot be
+represented by a Constant. Examples of these are pi, e, c,
+and others.
+
+"""
 import util
 import Term
 import Constant
